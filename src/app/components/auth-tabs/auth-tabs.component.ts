@@ -21,4 +21,13 @@ export class AuthTabsComponent implements OnInit {
   loginUser() {
     console.log(this.userForm.value);
   }
+
+  showPassword() {
+    let inputPass = <HTMLInputElement>document.getElementById('password');
+    if (inputPass.type === 'password') {
+      inputPass.type = 'text';
+    } else {
+      inputPass.type = 'password';
+    }
+  }
 }
