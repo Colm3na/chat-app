@@ -4,9 +4,9 @@
 
 According to the Angular's official documentation, 'Although ngModel is a valid Angular directive, it isn't available by default'. This means we need to import the FormsModule in the app.module.ts.
 
-´´´
+```
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-´´´
+```
 and then add it to our imports:
 
 ```
@@ -15,10 +15,11 @@ and then add it to our imports:
 ```
 
 IMPORTANT: every time a change is made to the app.module.ts a complete restart of the Angular app is needed. It won't be automatically applied. You need to kill the process and run 'ng serve' again.
-IMPORTANT*: in my case I also needed to add
-´´´
+
+IMPORTANT-II: in my case I also needed to add
+```
 import { FormsModule } from '@angular/forms';
-´´´
+```
 in the auth.module.ts, as I was reaching this component through the auth-routing.module. 
 
 # ChatApp
