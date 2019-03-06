@@ -1,4 +1,7 @@
 .input-field label {
     color: #ffffff;
-  }
-  
+}
+
+span.error {
+  color: red;
+}

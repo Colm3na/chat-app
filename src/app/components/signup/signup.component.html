@@ -7,24 +7,39 @@
               autocomplete="off" placeholder="Your name"
               id="signup-username">
         <label for="signup-username">Username</label>
+        <!-- Angular validation -->
+        <span *ngIf="!signupForm.controls['username'].valid && signupForm.controls['username'].touched"
+              class="error">
+            Name is required.
+        </span>
       </div>
     </div>
 
     <div class="row">
-        <div class="input-field col s6">
-            <input formControlName="email" type="email" 
-              autocomplete="off" placeholder="E-mail"
-              id="signup-email">
-              <label for="signup-password">Email</label>
-        </div>
+      <div class="input-field col s6">
+        <input formControlName="email" type="email" 
+          autocomplete="off" placeholder="E-mail"
+          id="signup-email">
+        <label for="signup-password">Email</label>
+         <!-- Angular validation -->
+        <span *ngIf="!signupForm.controls['email'].valid && signupForm.controls['email'].touched"
+         class="error">
+          E-mail is required.
+        </span>
+      </div>
     </div>
 
     <div class="row">
-        <div class="input-field col s6">
-            <input formControlName="password" type="password" autocomplete="off" 
-              id="signup-password" placeholder="Password">
-              <label for="signup-password">Password</label>
-        </div>
+      <div class="input-field col s6">
+        <input formControlName="password" type="password" autocomplete="off" 
+          id="signup-password" placeholder="Password">
+        <label for="signup-password">Password</label>
+         <!-- Angular validation -->
+        <span *ngIf="!signupForm.controls['password'].valid && signupForm.controls['password'].touched"
+         class="error">
+          Password is required.
+        </span>
+      </div>
     </div>
 
     <div class="row">

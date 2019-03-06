@@ -12,6 +12,11 @@
                 placeholder="Your name" id="username" 
                 type="text">
         <label for="username">Username</label>
+        <!-- Angular validation -->
+        <span *ngIf="!loginForm.controls['username'].valid && loginForm.controls['username'].touched"
+        class="error">
+          Name is required.
+        </span>
       </div>
     </div>
 
@@ -20,12 +25,17 @@
         <input formControlName="password" autocomplete="off"
                 placeholder="Password" id="password" type="password">
         <label for="password">Password</label>
+        <!-- Angular validation -->
+        <span *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched"
+        class="error">
+          Password is required.
+        </span>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s6">
-          <label><input type="checkbox" (click)="showPassword()"> Show password</label>
+        <label><input type="checkbox" (click)="showPassword()"> Show password</label>
       </div>
     </div>
 
