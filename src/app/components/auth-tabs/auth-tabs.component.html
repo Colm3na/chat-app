@@ -1,3 +1,28 @@
-<p>
-  auth-tabs works!
-</p>
+<div class="card-panel blue bodyDiv">
+
+  <form action="">
+
+    <div class="input-field col s6">
+
+      <input [(ngModel)]="user.name" class="form-control"
+              name="name" placeholder="Your name" id="username" 
+              type="text" class="validate">
+      <label for="username">Username</label>
+
+    </div>
+
+    <div class="input-field col s6">
+
+      <input [(ngModel)]="user.password" name="password" 
+              class="form-control" placeholder="Password" 
+              id="password" type="text" class="validate">
+      <label for="password">Password</label>
+
+    </div>
+
+    <button (click)="showUser()" class="btn waves-effect waves-light" type="submit" name="action">Submit
+      <i class="material-icons right">send</i>
+    </button>
+
+  </form>
+</div>
