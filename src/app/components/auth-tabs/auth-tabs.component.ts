@@ -7,22 +7,18 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./auth-tabs.component.css']
 })
 export class AuthTabsComponent implements OnInit {
-  userForm;
-  user = {
-    name: 'Matias',
-    password: 'pass'
-  };
+  userForm: FormGroup;
 
   constructor() {
     this.userForm = new FormGroup({
-      username: new FormControl(this.user.name, [Validators.required]),
-      password: new FormControl(this.user.password, [Validators.required])
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
     });
   }
 
   ngOnInit() {}
 
-  showUser() {
-    console.log(this.user);
+  loginUser() {
+    console.log(this.userForm.value);
   }
 }

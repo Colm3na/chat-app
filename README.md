@@ -20,7 +20,13 @@ IMPORTANT-II: in my case I also needed to add
 ```
 import { FormsModule } from '@angular/forms';
 ```
-in the auth.module.ts, as I was reaching this component through the auth-routing.module. 
+in the auth.module.ts, as I was reaching this component through the auth-routing.module.
+
+2. Can't bind to 'formGroup' since it isn't a known property of 'form'.
+
+formGroup is a selector for directive named FormGroupDirective that is a part of ReactiveFormsModule, hence the need to import it (in our module). It is used to bind an existing FormGroup to a DOM element.
+
+Answer found in: https://stackoverflow.com/questions/39152071/cant-bind-to-formgroup-since-it-isnt-a-known-property-of-form
 
 # ChatApp
 
