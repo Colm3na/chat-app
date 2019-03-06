@@ -1,5 +1,9 @@
 <div class="card-panel blue bodyDiv">
 
+  <div class="progress" *ngIf="showSpinner">
+      <div class="indeterminate"></div>
+  </div>
+  
   <form [formGroup]="userForm" novalidate (ngSubmit)="loginUser()">
     <div class="row">
       <div class="input-field col s6">
@@ -25,7 +29,7 @@
     </div>
 
     <button style="margin-top: 15px;" class="btn waves-effect waves-light" id="loginbtn"
-    type="submit">Login
+    type="submit" [disabled]="!userForm.valid">Login
       <i class="material-icons right">send</i>
     </button>
 

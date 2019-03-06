@@ -8,6 +8,7 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 })
 export class AuthTabsComponent implements OnInit {
   userForm: FormGroup;
+  showSpinner = false;
 
   constructor() {
     this.userForm = new FormGroup({
@@ -19,6 +20,8 @@ export class AuthTabsComponent implements OnInit {
   ngOnInit() {}
 
   loginUser() {
+    this.showSpinner = true;
+
     console.log(this.userForm.value);
   }
 
