@@ -1,0 +1,37 @@
+<div class="card-panel blue bodyDiv">
+
+    <div class="progress" *ngIf="showSpinner">
+        <div class="indeterminate"></div>
+    </div>
+  
+    <form [formGroup]="userForm" novalidate (ngSubmit)="loginUser()">
+      <div class="row">
+        <div class="input-field col s6">
+          <input formControlName="username" autocomplete="off"
+                  placeholder="Your name" id="username" 
+                  type="text">
+          <label for="username">Username</label>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="input-field col s6">
+          <input formControlName="password" autocomplete="off"
+                  placeholder="Password" id="password" type="password">
+          <label for="password">Password</label>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="input-field col s6">
+            <label><input type="checkbox" (click)="showPassword()"> Show password</label>
+        </div>
+      </div>
+  
+      <button style="margin-top: 15px;" class="btn waves-effect waves-light" id="loginbtn"
+      type="submit" [disabled]="!userForm.valid">Login
+        <i class="material-icons right">send</i>
+      </button>
+  
+    </form>
+  </div>
