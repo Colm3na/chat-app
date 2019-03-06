@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
   }
 
   showPassword() {
-    let inputPass = <HTMLInputElement>document.getElementById('password-signup');
+    let inputPass = <HTMLInputElement>document.getElementById('signup-password');
     if (inputPass.type === 'password') {
       inputPass.type = 'text';
     } else {

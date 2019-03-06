@@ -1,24 +1,29 @@
 <div class="container">
-  <h3>Sign Up</h3>
+  <h3 id="title">Sign Up</h3>
   <form [formGroup]="signupForm" novalidate (ngSubmit)="signupUser()">
     <div class="row">
       <div class="input-field col s6">
         <input formControlName="username" type="text" 
-              autocomplete="off" placeholder="Your name">
+              autocomplete="off" placeholder="Your name"
+              id="signup-username">
+        <label for="signup-username">Username</label>
       </div>
     </div>
 
     <div class="row">
         <div class="input-field col s6">
             <input formControlName="email" type="email" 
-              autocomplete="off" placeholder="E-mail">
+              autocomplete="off" placeholder="E-mail"
+              id="signup-email">
+              <label for="signup-password">Email</label>
         </div>
     </div>
 
     <div class="row">
         <div class="input-field col s6">
             <input formControlName="password" type="password" autocomplete="off" 
-              id="password-signup" placeholder="Password">
+              id="signup-password" placeholder="Password">
+              <label for="signup-password">Password</label>
         </div>
     </div>
 
