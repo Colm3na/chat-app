@@ -4,7 +4,8 @@
       <div class="indeterminate"></div>
   </div>
 
-  <form [formGroup]="userForm" novalidate (ngSubmit)="loginUser()">
+  <h3>Login</h3>
+  <form [formGroup]="loginForm" novalidate (ngSubmit)="loginUser()">
     <div class="row">
       <div class="input-field col s6">
         <input formControlName="username" autocomplete="off"
@@ -29,7 +30,7 @@
     </div>
 
     <button style="margin-top: 15px;" class="btn waves-effect waves-light" id="loginbtn"
-    type="submit" [disabled]="!userForm.valid">Login
+    type="submit" [disabled]="!loginForm.valid">Login
       <i class="material-icons right">send</i>
     </button>
 

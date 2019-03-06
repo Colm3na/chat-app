@@ -7,11 +7,11 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  userForm: FormGroup;
+  loginForm: FormGroup;
   showSpinner = false;
 
   constructor() {
-    this.userForm = new FormGroup({
+    this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     })
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this.showSpinner = true;
 
-    console.log(this.userForm.value);
+    console.log(this.loginForm.value);
   }
 
   showPassword() {
