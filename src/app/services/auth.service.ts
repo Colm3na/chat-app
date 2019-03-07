@@ -6,11 +6,12 @@ import { HttpClient } from '@angular/common/http'
 })
 export class AuthService {
 
-  private authUrl = 'api/chatapp/register';
+  private authUrl = 'http://localhost:3000/api/chatapp/register';
 
   constructor( private http: HttpClient ) { }
 
-  getHeader() {
+  getHeaders() {
+    console.log(this.http.get(this.authUrl))
     return this.http.get(this.authUrl);
   }
 }

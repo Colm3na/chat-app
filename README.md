@@ -28,6 +28,20 @@ formGroup is a selector for directive named FormGroupDirective that is a part of
 
 Answer found in: https://stackoverflow.com/questions/39152071/cant-bind-to-formgroup-since-it-isnt-a-known-property-of-form
 
+3. Access to XMLHttpRequest ... has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+I could find the solution to this quite easily with a quick search. The problem lies on the fact that the request to the server is being made from another source different that the one of the server. In this case another localhost port. As explained in this blog post (https://daveceddia.com/access-control-allow-origin-cors-errors-in-angular/), the quickest solution for this is to change the server's configuration to add the header 'Access-Control-Allow-Origin: *'. That is, if you have access to the server.
+
+The code to add this header within the Express framework is:
+
+```
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+```
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
