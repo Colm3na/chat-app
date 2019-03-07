@@ -7,15 +7,10 @@ import { HttpClient } from '@angular/common/http'
 export class AuthService {
 
   private authUrl = 'http://localhost:3000/api/chatapp/register';
-  user = {
-    username: 'Jaimito',
-    email: 'delospalotudos@gmail.com',
-    password: 'jauja'
-  }
 
   constructor( private http: HttpClient ) { }
 
-  getHeaders() {
-    return this.http.post(this.authUrl, this.user);
+  signUp(user) {
+    return this.http.post(this.authUrl, user);
   }
 }
