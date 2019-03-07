@@ -1,7 +1,10 @@
-.input-field label {
-    color: #ffffff;
-}
-
 span.error {
   color: red;
+}
+
+#title {
+  background-color: #2196F3 ;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
 }

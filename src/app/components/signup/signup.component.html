@@ -1,57 +1,62 @@
 <div class="container">
-  <h3 id="title">Sign Up</h3>
-  <form [formGroup]="signupForm" novalidate (ngSubmit)="signupUser()">
-    <div class="row">
-      <div class="input-field col s6">
-        <input formControlName="username" type="text" 
-              autocomplete="off" placeholder="Your name"
-              id="signup-username">
-        <label for="signup-username">Username</label>
-        <!-- Angular validation -->
-        <span *ngIf="!signupForm.controls['username'].valid && signupForm.controls['username'].touched"
-              class="error">
-            Name is required.
-        </span>
-      </div>
+  <div class="row">
+    <div class="col s10 offset-s1">
+
+      <h3 id="title">Sign Up</h3>
+      <form class="col s12" [formGroup]="signupForm" novalidate (ngSubmit)="signupUser()">
+        <div class="row">
+          <div class="input-field col s12">
+            <input formControlName="username" type="text" 
+                  autocomplete="off" placeholder="Your name"
+                  id="signup-username">
+            <label for="signup-username">Username</label>
+            <!-- Angular validation -->
+            <span *ngIf="!signupForm.controls['username'].valid && signupForm.controls['username'].touched"
+                  class="error">
+                Name is required.
+            </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input formControlName="email" type="email" 
+              autocomplete="off" placeholder="E-mail"
+              id="signup-email">
+            <label for="signup-password">Email</label>
+            <!-- Angular validation -->
+            <span *ngIf="!signupForm.controls['email'].valid && signupForm.controls['email'].touched"
+            class="error">
+              E-mail is required.
+            </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input formControlName="password" type="password" autocomplete="off" 
+              id="signup-password" placeholder="Password">
+            <label for="signup-password">Password</label>
+            <!-- Angular validation -->
+            <span *ngIf="!signupForm.controls['password'].valid && signupForm.controls['password'].touched"
+            class="error">
+              Password is required.
+            </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+              <label><input type="checkbox" (click)="showPassword()"> Show password</label>
+          </div>
+        </div>
+
+        <button style="margin-top: 15px;" class="btn waves-effect waves-light" id="signupbtn"
+        type="submit" [disabled]="!signupForm.valid">Sign Up
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+
     </div>
-
-    <div class="row">
-      <div class="input-field col s6">
-        <input formControlName="email" type="email" 
-          autocomplete="off" placeholder="E-mail"
-          id="signup-email">
-        <label for="signup-password">Email</label>
-         <!-- Angular validation -->
-        <span *ngIf="!signupForm.controls['email'].valid && signupForm.controls['email'].touched"
-         class="error">
-          E-mail is required.
-        </span>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="input-field col s6">
-        <input formControlName="password" type="password" autocomplete="off" 
-          id="signup-password" placeholder="Password">
-        <label for="signup-password">Password</label>
-         <!-- Angular validation -->
-        <span *ngIf="!signupForm.controls['password'].valid && signupForm.controls['password'].touched"
-         class="error">
-          Password is required.
-        </span>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="input-field col s6">
-          <label><input type="checkbox" (click)="showPassword()"> Show password</label>
-      </div>
-    </div>
-
-    <button style="margin-top: 15px;" class="btn waves-effect waves-light" id="signupbtn"
-    type="submit" [disabled]="!signupForm.valid">Sign Up
-      <i class="material-icons right">send</i>
-    </button>
-  </form>
-
+  </div>
 </div>
