@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { StreamsComponent } from '../components/streams/streams.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [StreamsComponent],
   imports: [
     CommonModule,
-    StreamsComponent
   ],
   exports: [StreamsComponent]
 })

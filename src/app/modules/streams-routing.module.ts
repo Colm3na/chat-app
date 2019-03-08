@@ -4,7 +4,7 @@ import { StreamsComponent } from '../components/streams/streams.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'streams',
     component: StreamsComponent
   }
 ];
