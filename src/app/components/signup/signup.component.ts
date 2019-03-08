@@ -40,7 +40,11 @@ export class SignupComponent implements OnInit {
       console.log(data);
     }, err => {
       console.log(err);
-      this.errorMessage = err.error.message;
+      if (Array.isArray(err.error.message)) {
+        this.errorMessage = err.error.message[0].message;
+      } else {
+        this.errorMessage = err.error.message;
+      }
     }, () => {
       console.log('HTTP request complete');
     })
