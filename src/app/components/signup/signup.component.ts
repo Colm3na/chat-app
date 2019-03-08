@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
+  errorMessage: String = '';
 
   constructor( private authService: AuthService ) {
     this.signupForm = new FormGroup({
@@ -37,6 +38,11 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(user)
     .subscribe(data => {
       console.log(data);
+    }, err => {
+      console.log(err);
+      this.errorMessage = err.error.message;
+    }, () => {
+      console.log('HTTP request complete');
     })
   }
 }
