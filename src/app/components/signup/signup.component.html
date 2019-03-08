@@ -6,7 +6,7 @@
       <form class="col s12" [formGroup]="signupForm" #form="ngForm" novalidate (ngSubmit)="signupUser(form)">
         <div class="row">
           <div class="input-field col s12">
-            <input formControlName="username" type="text" 
+            <input formControlName="username" type="text"
             autocomplete="off" placeholder="Your name"
             id="signup-username">
             <label for="signup-username">Username</label>
@@ -15,44 +15,52 @@
             class="error">
                 Name is required.
             </span>
-            <span *ngIf="signupForm.controls['username'].touched && this.signupForm.controls['username'].hasError('minlength')" 
+            <span *ngIf="signupForm.controls['username'].touched && this.signupForm.controls['username'].hasError('minlength')"
             class="error">
               Name needs to be at least 3 characters long.
             </span>
-            <span *ngIf="signupForm.controls['username'].touched && this.signupForm.controls['username'].hasError('maxlength')" 
+            <span *ngIf="signupForm.controls['username'].touched && this.signupForm.controls['username'].hasError('maxlength')"
             class="error">
-              Name needs to be max 30 characters long.
+              Name cannot be more than 30 characters long.
             </span>
           </div>
         </div>
 
         <div class="row">
           <div class="input-field col s12">
-            <input formControlName="email" type="email" 
+            <input formControlName="email" type="email"
             autocomplete="off" placeholder="E-mail"
             id="signup-email">
             <label for="signup-password">Email</label>
             <!-- Angular validation -->
-            <span *ngIf="!signupForm.controls['email'].valid && signupForm.controls['email'].touched"
+            <span *ngIf="signupForm.controls['email'].touched && (signupForm.controls['email'].value.length === 0)"
             class="error">
               E-mail is required.
+            </span>
+            <span *ngIf="signupForm.controls['email'].touched && signupForm.controls['email'].hasError('email')"
+            class="error">
+              Needs to be a valid e-mail.
             </span>
           </div>
         </div>
 
         <div class="row">
           <div class="input-field col s12">
-            <input formControlName="password" type="password" autocomplete="off" 
+            <input formControlName="password" type="password" autocomplete="off"
             id="signup-password" placeholder="Password">
             <label for="signup-password">Password</label>
             <!-- Angular validation -->
-            <span *ngIf="!signupForm.controls['password'].valid && signupForm.controls['password'].touched"
+            <span *ngIf="signupForm.controls['password'].touched && (signupForm.controls['password'].value.length === 0)"
             class="error">
               Password is required.
             </span>
-            <span *ngIf="signupForm.controls['password'].touched && this.signupForm.controls['password'].hasError('minlength')" 
+            <span *ngIf="signupForm.controls['password'].touched && this.signupForm.controls['password'].hasError('minlength')"
             class="error">
               Password needs to be at least 4 characters long.
+            </span>
+            <span *ngIf="signupForm.controls['password'].touched && this.signupForm.controls['password'].hasError('pattern')"
+            class="error">
+              Password needs to have at least one special character.
             </span>
           </div>
         </div>
