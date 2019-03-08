@@ -3,17 +3,25 @@
     <div class="col s10 offset-s1">
 
       <h3 id="title">Sign Up</h3>
-      <form class="col s12" [formGroup]="signupForm" novalidate (ngSubmit)="signupUser()">
+      <form class="col s12" [formGroup]="signupForm" #form="ngForm" novalidate (ngSubmit)="signupUser(form)">
         <div class="row">
           <div class="input-field col s12">
             <input formControlName="username" type="text" 
-                  autocomplete="off" placeholder="Your name"
-                  id="signup-username">
+            autocomplete="off" placeholder="Your name"
+            id="signup-username">
             <label for="signup-username">Username</label>
             <!-- Angular validation -->
-            <span *ngIf="!signupForm.controls['username'].valid && signupForm.controls['username'].touched"
-                  class="error">
+            <span *ngIf="signupForm.controls['username'].touched && (signupForm.controls['username'].value.length === 0)"
+            class="error">
                 Name is required.
+            </span>
+            <span *ngIf="signupForm.controls['username'].touched && this.signupForm.controls['username'].hasError('minlength')" 
+            class="error">
+              Name needs to be at least 3 characters long.
+            </span>
+            <span *ngIf="signupForm.controls['username'].touched && this.signupForm.controls['username'].hasError('maxlength')" 
+            class="error">
+              Name needs to be max 30 characters long.
             </span>
           </div>
         </div>
@@ -21,8 +29,8 @@
         <div class="row">
           <div class="input-field col s12">
             <input formControlName="email" type="email" 
-              autocomplete="off" placeholder="E-mail"
-              id="signup-email">
+            autocomplete="off" placeholder="E-mail"
+            id="signup-email">
             <label for="signup-password">Email</label>
             <!-- Angular validation -->
             <span *ngIf="!signupForm.controls['email'].valid && signupForm.controls['email'].touched"
@@ -35,12 +43,16 @@
         <div class="row">
           <div class="input-field col s12">
             <input formControlName="password" type="password" autocomplete="off" 
-              id="signup-password" placeholder="Password">
+            id="signup-password" placeholder="Password">
             <label for="signup-password">Password</label>
             <!-- Angular validation -->
             <span *ngIf="!signupForm.controls['password'].valid && signupForm.controls['password'].touched"
             class="error">
               Password is required.
+            </span>
+            <span *ngIf="signupForm.controls['password'].touched && this.signupForm.controls['password'].hasError('minlength')" 
+            class="error">
+              Password needs to be at least 4 characters long.
             </span>
           </div>
         </div>
@@ -52,7 +64,8 @@
         </div>
 
         <button style="margin-top: 15px;" class="btn waves-effect waves-light" id="signupbtn"
-        type="submit" [disabled]="!signupForm.valid">Sign Up
+        type="submit" [disabled]="!signupForm.valid">
+          Sign Up
           <i class="material-icons right">send</i>
         </button>
       </form>

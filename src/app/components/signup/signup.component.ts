@@ -13,9 +13,9 @@ export class SignupComponent implements OnInit {
 
   constructor( private authService: AuthService ) {
     this.signupForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),      
+      username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(4)]),      
     })
   }
 
@@ -31,7 +31,8 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  signupUser() {
+  private signupUser(form:any) {
+    console.log(form)
     let user = this.signupForm.value;
     this.authService.signUp(user)
     .subscribe(data => {
