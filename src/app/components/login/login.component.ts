@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   showSpinner = false;
   errorMessage: String = '';
 
-  constructor( private authService: AuthService ) {
+  constructor( private authService: AuthService, private router: Router ) {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit {
         }
       }, () => {
         console.log('HTTP request completed');
+        this.router.navigate(['/streams']);
       })
   }
 
