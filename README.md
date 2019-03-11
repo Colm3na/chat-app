@@ -42,6 +42,10 @@ app.use(function(req, res, next) {
 });
 ```
 
+4. TypeError: Cannot read property 'data' of undefined.
+When trying to pass the token through the token service, using the ngx-cookie-library.
+
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
