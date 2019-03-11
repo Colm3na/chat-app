@@ -27,6 +27,9 @@ export class TokenService {
       payload = token.split('.')[1];
       payload = JSON.parse(window.atob(payload));
     }
+    console.log(token)
+    console.log(payload)
+    console.log(payload.data)
     return payload.data;
   }
 }

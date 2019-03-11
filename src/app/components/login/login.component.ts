@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
   showSpinner = false;
   errorMessage: String = '';
 
-  constructor( private authService: AuthService, private router: Router ) {
+  constructor( private authService: AuthService, private router: Router,
+    private tokenService: TokenService ) {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -39,6 +41,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(user)
       .subscribe( data => {
         console.log(data);
+        this.tokenService.setToken(data['token']);
       }, err => {
         console.log(err);
         if (Array.isArray(err.error.message)) {
