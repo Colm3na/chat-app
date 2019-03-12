@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
     console.log(form)
     this.showSpinner = true;
     let user = this.loginForm.value;
+    // check if user is logging in either with password or username
     if (user.usernameemail.includes('@')) {
       user.email = user.usernameemail;
       delete user.usernameemail;
@@ -46,18 +47,25 @@ export class LoginComponent implements OnInit {
       delete user.usernameemail;
     }
     console.log(user);
+    // call the service to authenticate user
     this.authService.login(user)
+      // give the user a new token
       .subscribe( data => {
         console.log(data);
         this.tokenService.setToken(data['token']);
-      }, err => {
+      }, 
+      // error
+      err => {
         console.log(err);
+        this.showSpinner = false;
         if (Array.isArray(err.error.message)) {
           this.errorMessage = err.error.message[0].message;
         } else {
           this.errorMessage = err.error.message;
         }
-      }, () => {
+      }, 
+      // request successfully completed
+      () => {
         console.log('HTTP request completed');
         this.router.navigate(['/streams']);
       })
