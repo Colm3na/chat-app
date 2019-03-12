@@ -70,7 +70,26 @@
 
         <div class="row">
           <div class="input-field col s12">
-              <label><input type="checkbox" (click)="showPassword()"> Show password</label>
+            <input formControlName="repassword" type="password" autocomplete="off"
+            id="verify-password" placeholder="Verify your password">
+            <label for="verify-password">Confirm password</label>
+              <!-- Angular validation -->
+            <span *ngIf="signupForm.controls['repassword'].touched && (signupForm.controls['repassword'].value.length === 0)"
+            class="error">
+              Confirm password.
+            </span>
+            <span *ngIf="signupForm.controls['repassword'].touched && signupForm.controls['password'].touched && 
+            (signupForm.controls['repassword'].value.length !== 0) &&
+            signupForm.controls['password'].value !== signupForm.controls['repassword'].value"
+            class="error">
+              Passwords don't match.
+            </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+              <label><input type="checkbox" (click)="showPassword()"> Show passwords</label>
           </div>
         </div>
 
