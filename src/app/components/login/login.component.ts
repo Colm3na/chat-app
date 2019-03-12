@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   constructor( private authService: AuthService, private router: Router,
     private tokenService: TokenService ) {
     this.loginForm = new FormGroup({
-      username: new FormControl('', Validators.required),
+      usernameemail: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     })
   }
@@ -38,6 +38,14 @@ export class LoginComponent implements OnInit {
     console.log(form)
     this.showSpinner = true;
     let user = this.loginForm.value;
+    if (user.usernameemail.includes('@')) {
+      user.email = user.usernameemail;
+      delete user.usernameemail;
+    } else {
+      user.username = user.usernameemail;
+      delete user.usernameemail;
+    }
+    console.log(user);
     this.authService.login(user)
       .subscribe( data => {
         console.log(data);

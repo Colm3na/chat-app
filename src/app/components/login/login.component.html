@@ -12,12 +12,12 @@
       <form class="col s12" [formGroup]="loginForm" novalidate (ngSubmit)="loginUser(form)" #form="ngForm">
         <div class="row">
           <div class="input-field col s12">
-            <input formControlName="username" autocomplete="off"
-                    placeholder="Your name" id="username" 
+            <input formControlName="usernameemail" autocomplete="off"
+                    placeholder="Name or e-mail" id="usernameemail" 
                     type="text">
-            <label for="username">Username</label>
+            <label for="usernameemail">Username or e-mail</label>
             <!-- Angular validation -->
-            <span *ngIf="!loginForm.controls['username'].valid && loginForm.controls['username'].touched"
+            <span *ngIf="!loginForm.controls['usernameemail'].valid && loginForm.controls['usernameemail'].touched"
             class="error">
               Name is required.
             </span>
