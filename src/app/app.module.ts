@@ -12,7 +12,7 @@ import { StreamsRoutingModule } from './modules/streams-routing.module';
 import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [AppComponent],
   imports: [BrowserModule,
     FormsModule, 
     AuthModule, 
