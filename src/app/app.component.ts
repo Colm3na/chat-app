@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     const token = this.tokenService.getToken();
 
     if (token) {
-      this.router.navigate(['streams']);
+      this.router.navigate(['chat']);
     } else {
       this.router.navigate(['/']);
     }
