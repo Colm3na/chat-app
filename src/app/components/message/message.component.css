@@ -1,0 +1,8 @@
+.rowDiv {
+    background: #ffffff !important;
+    height: 61vh !important;
+    max-height: 62vh !important;
+    overflow-y: scroll !important;
+    top: 0px;
+    margin-top: -20px !important;
+  }

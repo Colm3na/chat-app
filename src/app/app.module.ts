@@ -11,6 +11,7 @@ import { StreamsModule } from './modules/streams.module';
 import { StreamsRoutingModule } from './modules/streams-routing.module';
 import { ChatRoutingModule } from './modules/chat-routing.module';
 import { CookieService } from 'ngx-cookie-service';
+import { ChatModule } from './modules/chat.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { CookieService } from 'ngx-cookie-service';
     AuthRoutingModule,
     StreamsModule,
     StreamsRoutingModule,
-    ChatRoutingModule
+    ChatRoutingModule,
+    ChatModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
