@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import io from 'socket.io-client';
 
 @Component({
@@ -25,10 +25,17 @@ export class MessageComponent implements OnInit {
   }
 
   send() {
-    console.log(this.input.nativeElement.value);
     this.message = this.input.nativeElement.value;
     this.socket.emit('new message', this.message);
-    this.renderer.setProperty(this.chatBubble.nativeElement, 'innerHTML', this.message);
+
+    const ul = document.querySelector('ul');
+    let newLi = document.createElement('li');
+    let newMsg = document.createTextNode(this.message);
+    newLi.appendChild(newMsg);
+    ul.appendChild(newLi);
+
+    // set back input value to empty string
+    this.input.nativeElement.value = '';
   }
 
 }
