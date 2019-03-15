@@ -2,8 +2,12 @@
   <div class="row">
     <div class="col s12">
       <ul>
-        <li>Hola</li>
+        <li #chatBubble>Hola</li>
       </ul>
+      <div style=" margin-top: 250px">
+        <input #inputMsg type="text" (change)="send()">
+        <button style="float:right;" class="btn" (click)="send()">Send</button>
+      </div>
     </div>
   </div>
 </div>

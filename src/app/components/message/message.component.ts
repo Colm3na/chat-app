@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 import io from 'socket.io-client';
 
 @Component({
@@ -8,20 +8,27 @@ import io from 'socket.io-client';
 })
 export class MessageComponent implements OnInit {
 
+  @ViewChild('inputMsg') input: ElementRef;
+  @ViewChild('chatBubble') chatBubble: ElementRef;
   socket: any;
-  message: String;
-  chatBubble: any;
+  message: string;
 
-  constructor() {
+  constructor( private renderer: Renderer2 ) {
     this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
-    // this.chatBubble = document.querySelector('li');
-    // console.log(this.chatBubble)
-    // this.socket.on('new message', (data) => {
-    //   this.chatBubble.innerHTML = data.message;
-    // })
+  }
+
+  ngAfterViewInit() {
+    this.input.nativeElement.focus();
+  }
+
+  send() {
+    console.log(this.input.nativeElement.value);
+    this.message = this.input.nativeElement.value;
+    this.socket.emit('new message', this.message);
+    this.renderer.setProperty(this.chatBubble.nativeElement, 'innerHTML', this.message);
   }
 
 }

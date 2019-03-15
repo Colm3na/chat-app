@@ -45,6 +45,10 @@ app.use(function(req, res, next) {
 4. TypeError: Cannot read property 'data' of undefined.
 When trying to pass the token through the token service, using the ngx-cookie-library.
 
+5. Uncaught ReferenceError: typing is not defined
+    at HTMLInputElement.onchange (chat:19)
+
+I was using the 'onchange' attribute on the input for the chat and getting this error. The reason for it is that in Angular these attributes have a slight different syntax. In short, we need to write them withouth the 'on' before the target event name and then this one inside parentheses. More on that in the official documentation: https://angular.io/guide/template-syntax#event-binding.
 
 # ChatApp
 
