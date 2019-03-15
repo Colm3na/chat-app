@@ -21,8 +21,4 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  event() {
-    this.socket.emit('button');
-  }
-
 }
