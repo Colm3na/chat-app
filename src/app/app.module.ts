@@ -12,6 +12,8 @@ import { StreamsRoutingModule } from './modules/streams-routing.module';
 import { ChatRoutingModule } from './modules/chat-routing.module';
 import { CookieService } from 'ngx-cookie-service';
 import { ChatModule } from './modules/chat.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/token-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +26,9 @@ import { ChatModule } from './modules/chat.module';
     ChatRoutingModule,
     ChatModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, {
+    provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
