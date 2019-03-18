@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import io from 'socket.io-client';
+import { TokenService } from 'src/app/services/token.service';
+import { ActivatedRoute } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-message',
@@ -12,12 +15,24 @@ export class MessageComponent implements OnInit {
   @ViewChild('chatBubble') chatBubble: ElementRef;
   socket: any;
   message: string;
+  user: any;
+  receiver: string;
+  receiverData: any;
 
-  constructor( private renderer: Renderer2 ) {
+  constructor( private renderer: Renderer2, 
+    private tokenService: TokenService, 
+    private route: ActivatedRoute,
+    private userService: UsersService ) {
     this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
+    this.user = this.tokenService.getPayload();
+    let username = this.user.username;
+    this.userService.getUserByUsername(username).subscribe( data => {
+      console.log(data);
+      this.receiverData = data;
+    })
   }
 
   ngAfterViewInit() {
