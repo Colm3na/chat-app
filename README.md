@@ -54,6 +54,17 @@ I was using the 'onchange' attribute on the input for the chat and getting this 
 
 I was missing 'Authorization' as part of the "Access-Control-Allow-Headers" in my CORS options.
 
+7. CSS not being applied to dynamically created HTML elements.
+
+I was generating li elements in my message.component.ts file to create the chat bubbles. CSS wasn't being reflected. Apparently, this is due to how Angular is rendering files. The workaround to this can be found in this StackOverflow post: https://stackoverflow.com/questions/36265026/angular-2-innerhtml-styling.
+In my case, I just needed to add ':host ::ng-deep' before the 'li' selector in my stylesheet file, like this:
+
+```
+:host ::ng-deep li {
+  ...
+}
+```
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
