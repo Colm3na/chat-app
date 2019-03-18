@@ -15,7 +15,7 @@ export class UsersService {
   }
 
   getUser(id) {
-    this.http.get(`${BASEURL}/user/:${id}`);
+    this.http.get(`${BASEURL}/user/${id}`);
   }
 
   getUserByUsername(username) {
