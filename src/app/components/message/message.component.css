@@ -5,4 +5,9 @@
     overflow-y: scroll !important;
     top: 0px;
     margin-top: -20px !important;
-  }
+}
+
+#typing {
+  font-style: italic;
+  opacity: 0.5;
+}

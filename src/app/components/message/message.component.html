@@ -4,7 +4,8 @@
       <ul>
       </ul>
       <div style=" margin-top: 250px">
-        <input #inputMsg type="text" (change)="send()">
+        <input #inputMsg type="text" (change)="send()" (keydown)="isTyping()">
+        <span *ngIf="typing" id="typing">{{receiver}} is typing...</span>
         <button style="float:right;" class="btn" (click)="send()">Send</button>
       </div>
     </div>

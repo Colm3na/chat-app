@@ -18,6 +18,7 @@ export class MessageComponent implements OnInit {
   user: any;
   receiver: string;
   receiverData: any;
+  typing = false;
 
   constructor( private renderer: Renderer2, 
     private tokenService: TokenService, 
@@ -32,11 +33,16 @@ export class MessageComponent implements OnInit {
     this.userService.getUserByUsername(username).subscribe( data => {
       console.log(data);
       this.receiverData = data;
+      this.receiver = data['user'][0].username;
     })
   }
 
   ngAfterViewInit() {
     this.input.nativeElement.focus();
+  }
+
+  isTyping() {
+    this.typing = true;
   }
 
   send() {
@@ -50,6 +56,7 @@ export class MessageComponent implements OnInit {
     ul.appendChild(newLi);
 
     // set back input value to empty string
+    this.typing = false;
     this.input.nativeElement.value = '';
   }
 
