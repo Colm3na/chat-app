@@ -39,8 +39,10 @@ export class SignupComponent implements OnInit {
   }
 
   private signupUser(form:any) {
-    console.log(form)
+    console.log(this.signupForm.value);
     let user = this.signupForm.value;
+    // repassword gives an error as it is not handled by any middleware
+    delete user.repassword;
     this.authService.signUp(user)
     .subscribe(data => {
       console.log(data);

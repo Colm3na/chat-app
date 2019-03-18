@@ -65,6 +65,11 @@ In my case, I just needed to add ':host ::ng-deep' before the 'li' selector in m
 }
 ```
 
+8. "repassword" is not allowed
+
+When trying to sign up a new user I got this error. It was because I was sending 'repassword' as part of the user object, while in the auth controller it wasn't being reflected.
+The quick fix for this was deleting this property with the delete operator before calling the auth service.
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
