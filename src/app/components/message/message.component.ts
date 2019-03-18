@@ -15,6 +15,7 @@ export class MessageComponent implements OnInit {
   @ViewChild('chatBubble') chatBubble: ElementRef;
   socket: any;
   message: string;
+  messagesList: any = [];
   user: any;
   receiver: string;
   receiverData: any;
@@ -47,13 +48,8 @@ export class MessageComponent implements OnInit {
 
   send() {
     this.message = this.input.nativeElement.value;
+    this.messagesList.push(this.message);
     this.socket.emit('new message', this.message);
-
-    const ul = document.querySelector('ul');
-    let newLi = document.createElement('li');
-    let newMsg = document.createTextNode(this.message);
-    newLi.appendChild(newMsg);
-    ul.appendChild(newLi);
 
     // set back input value to empty string
     this.typing = false;

@@ -1,3 +1,13 @@
+.chat-bubble {
+  display: inline-block;
+  border: 1px blue solid;
+  border-radius: 12px;
+  box-shadow: 5px 6px #8888;
+  margin-bottom: 7px;
+  padding: 4px;
+  clear: both;
+}
+
 .rowDiv {
     background: #ffffff !important;
     height: 61vh !important;

@@ -1,8 +1,13 @@
 <div class="col s12 rowDiv" ngx-auto-scroll lock-y-offset="10" observe-attributes>
   <div class="row">
     <div class="col s12">
-      <ul>
-      </ul>
+      <div *ngFor="let message of messagesList">
+        <div *ngIf="user.username === receiver" class="right chat-bubble">
+          <div>{{message}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12">
       <div style=" margin-top: 250px">
         <input #inputMsg type="text" (change)="send()" (keydown)="isTyping()">
         <span *ngIf="typing" id="typing">{{receiver}} is typing...</span>
