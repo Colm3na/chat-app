@@ -50,6 +50,10 @@ When trying to pass the token through the token service, using the ngx-cookie-li
 
 I was using the 'onchange' attribute on the input for the chat and getting this error. The reason for it is that in Angular these attributes have a slight different syntax. In short, we need to write them withouth the 'on' before the target event name and then this one inside parentheses. More on that in the official documentation: https://angular.io/guide/template-syntax#event-binding.
 
+6. Access to XMLHttpRequest at 'http://localhost:3000/api/chatapp/username/${username}' from origin 'http://localhost:4200' has been blocked by CORS policy: Request header field authorization is not allowed by Access-Control-Allow-Headers in preflight response.
+
+I was missing 'Authorization' as part of the "Access-Control-Allow-Headers" in my CORS options.
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
