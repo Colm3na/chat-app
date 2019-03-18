@@ -8,9 +8,19 @@
       </div>
     </div>
     <div class="col s12">
-      <div style=" margin-top: 250px">
+      <div style="margin-top: 250px">
         <input #inputMsg type="text" (change)="send()" (keydown)="isTyping()">
+      </div>
+      <div class="col s10">
         <span *ngIf="typing" id="typing">{{sender}} is typing...</span>
+      </div>
+      <div class="col s3">
+        <button class="btn">😄</button>
+
+        <div class="emoji-content-editable" (emojiPickerCaretEmitter)="HandleCurrentCaret($event)" (input)="content = $event.target.textContent"
+          [textContent]="content" contenteditable="true"></div>
+      </div>
+      <div class="col s1">
         <button style="float:right;" class="btn" (click)="send()">Send</button>
       </div>
     </div>

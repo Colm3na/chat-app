@@ -21,6 +21,7 @@
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
     "materialize-css": "^1.0.0-rc.2",
+    "ng2-emoji-picker": "^1.4.8",
     "ngx-cookie-service": "^2.1.0",
     "rxjs": "~6.3.3",
     "socket.io-client": "^2.2.0",
