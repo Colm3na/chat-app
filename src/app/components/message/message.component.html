@@ -7,29 +7,27 @@
         </div>
       </div>
     </div>
-    <form (ngSubmit)="send()">
-      <div class="col s12">
-        <div style="margin-top: 250px">
-          <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(true); timer=5;" (keyup)="isTyping(false)">
-        </div>
-        <div class="col s10">
-          <span *ngIf="typing" id="typing">{{sender}} is typing...</span>
-        </div>
-        <div class="col s3 emojiDiv">
-          <button class="emojiBtn" (click)="Toggled(); false;">😄</button>
-
-          <div class="emoji-content-editable" (emojiPickerCaretEmitter)="handleCurrentCaret($event)" (input)="content = $event.target.textContent"
-            [textContent]="content" contenteditable="true">
-          </div>
-
-          <i class="emoji-toggle-button imgBtn" [(emojiPickerIf)]="toggled"
-          [emojiPickerPreserveSelection]="false" [emojiPickerDirection]="direction" [emojiPickerAutofocus]="true"
-          (emojiPickerSelect)="handleSelection($event)"></i>
-        </div>
-        <div class="col s1">
-          <button class="suffix btn" (click)="send(); $event.preventDefault()">Send</button>
-        </div>
+    <div class="col s12">
+      <div style="margin-top: 250px">
+        <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(true); timer=5;" (keyup)="isTyping(false)">
       </div>
-    </form>
+      <div class="col s10">
+        <span *ngIf="typing" id="typing">{{sender}} is typing...</span>
+      </div>
+      <div class="col s3 emojiDiv">
+        <button class="emojiBtn" type="button" (click)="Toggled(); false;">😄</button>
+
+        <div class="emoji-content-editable" (emojiPickerCaretEmitter)="handleCurrentCaret($event)" (input)="content = $event.target.textContent"
+          [textContent]="content" contenteditable="true">
+        </div>
+
+        <i class="emoji-toggle-button imgBtn" [(emojiPickerIf)]="toggled"
+        [emojiPickerPreserveSelection]="false" [emojiPickerDirection]="direction" [emojiPickerAutofocus]="true"
+        (emojiPickerSelect)="handleSelection($event)"></i>
+      </div>
+      <div class="col s1">
+        <button class="suffix btn" (click)="send(); $event.preventDefault()">Send</button>
+      </div>
+    </div>
   </div>
 </div>
