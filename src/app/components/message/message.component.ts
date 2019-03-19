@@ -22,6 +22,7 @@ export class MessageComponent implements OnInit {
   senderData: any;
   typing = false;
   messageDB: any;
+  timer = 0;
 
   constructor( private renderer: Renderer2, 
     private tokenService: TokenService, 
@@ -45,12 +46,16 @@ export class MessageComponent implements OnInit {
     this.input.nativeElement.focus();
   }
 
-  isTyping() {
-    this.typing = true;
-    let timeout = setInterval(() => {
-      this.typing = false;
-      clearInterval(timeout);
-    }, 900)
+  isTyping(val) {
+    if ( val === true ) {
+      this.typing = true;
+    } else {
+      if ( this.timer <= 0 ) {
+        this.typing = false;
+      } else {
+        setTimeout(() => {this.timer = 0; this.isTyping(false)}, 1500);
+      }
+    }
   }
 
   send() {

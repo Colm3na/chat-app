@@ -9,7 +9,7 @@
     </div>
     <div class="col s12">
       <div style="margin-top: 250px">
-        <input #inputMsg type="text" (change)="send()" (keydown)="isTyping()">
+        <input #inputMsg type="text" (change)="send()" (keypress)="isTyping(true); timer=5;" (keyup)="isTyping(false)">
       </div>
       <div class="col s10">
         <span *ngIf="typing" id="typing">{{sender}} is typing...</span>
