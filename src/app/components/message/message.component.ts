@@ -56,8 +56,10 @@ export class MessageComponent implements OnInit {
   }
 
   handleSelection(event: EmojiEvent) {
+    this.content = '';
     this.content = this.content.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.content.slice(this._lastCaretEvent.caretOffset);
     this.eventMock = JSON.stringify(event);
+    this.message = this.content;
 
     this.toggled = !this.toggled;
   }
@@ -84,12 +86,14 @@ export class MessageComponent implements OnInit {
   }
 
   send() {
+    this.message = '';
     this.message = this.input.nativeElement.value;
     this.messagesList.push(this.message);
     this.socket.emit('new message', this.message);
     // set back input value to empty string
-    this.typing = false;
     this.input.nativeElement.value = '';
+    // typing to false
+    this.typing = false;
     // save chat message in DB
     console.log(this.senderData)
     this.messageDB = {

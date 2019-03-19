@@ -21,3 +21,21 @@
   font-style: italic;
   opacity: 0.5;
 }
+
+.emojiDiv {
+  width: 40px !important;
+  margin-bottom: 0px !important;
+}
+
+.emojiBtn {
+  font-size: 20px !important;
+  background: inherit !important;
+  border: none !important;
+  text-align: center !important;
+  margin-left: -10px !important;
+}
+
+.emojiDiv {
+  width: 40px !important;
+  margin-bottom: 0px !important;
+}
