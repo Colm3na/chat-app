@@ -74,6 +74,16 @@ The quick fix for this was deleting this property with the delete operator befor
 
 The emoji picker module was built using an older version of rxjs (5.5.2), so this is why I was getting many errors like this one. The solution was simply to install the 'rxjs-compat' package for backwards compatibility.
 
+10. Emojis not being colored in VSCode.
+
+I was using Visual Studio Code as my code editor in its latest version as of February 2019, 1.32, with Ubuntu 16.04 as OS. Still, emojis were being displayed black and white, without colors. To fix this, I installed the Tom Rochette's Emoji extension for VSCode, which includes the Segoe UI Emoji fonts. This fixed it.
+
+11. Emojis not being colored in web browsers (Linux OS).
+
+As I was on Ubuntu, emojis weren't being displayed colored. I had to follow these steps to render the emojis properly on the browser, by installing a new font and adding it to fontconfig: https://github.com/eosrei/twemoji-color-font#install-on-linux
+
+Sadly, this solution only works in Firefox, and I couldn't find any solution yet for Chrome. Apparently, in Ubuntu 18.04+ it is as easy as installing the package 'fonts-noto-color-emoji' and restart Chrome. Some day I'll have to upgrade 😢
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
