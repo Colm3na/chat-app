@@ -4,6 +4,7 @@ import { TokenService } from 'src/app/services/token.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { MessageService } from 'src/app/services/message.service';
+import { EmojiEvent, CaretEvent } from 'ng2-emoji-picker';
 
 @Component({
   selector: 'app-message',
@@ -23,6 +24,14 @@ export class MessageComponent implements OnInit {
   typing = false;
   messageDB: any;
   timer = 0;
+
+  eventMock;
+  eventPosMock;
+  direction = Math.random() > 0.5 ? (Math.random() > 0.5 ? 'top' : 'bottom') : (Math.random() > 0.5 ? 'right' : 'left');
+  toggled = false;
+  content = ' ';
+
+  private _lastCaretEvent: CaretEvent;
 
   constructor( private renderer: Renderer2, 
     private tokenService: TokenService, 
@@ -44,6 +53,22 @@ export class MessageComponent implements OnInit {
 
   ngAfterViewInit() {
     this.input.nativeElement.focus();
+  }
+
+  handleSelection(event: EmojiEvent) {
+    this.content = this.content.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.content.slice(this._lastCaretEvent.caretOffset);
+    this.eventMock = JSON.stringify(event);
+
+    this.toggled = !this.toggled;
+  }
+
+  handleCurrentCaret(event: CaretEvent) {
+    this._lastCaretEvent = event;
+    this.eventPosMock = `{ caretOffset : ${event.caretOffset}, caretRange: Range{...}, textContent: ${event.textContent} }`;
+  }
+
+  Toggled() {
+    this.toggled = !this.toggled;
   }
 
   isTyping(val) {
