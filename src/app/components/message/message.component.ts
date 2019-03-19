@@ -47,6 +47,10 @@ export class MessageComponent implements OnInit {
 
   isTyping() {
     this.typing = true;
+    let timeout = setInterval(() => {
+      this.typing = false;
+      clearInterval(timeout);
+    }, 900)
   }
 
   send() {
