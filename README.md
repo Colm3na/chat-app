@@ -70,6 +70,10 @@ In my case, I just needed to add ':host ::ng-deep' before the 'li' selector in m
 When trying to sign up a new user I got this error. It was because I was sending 'repassword' as part of the user object, while in the auth controller it wasn't being reflected.
 The quick fix for this was deleting this property with the delete operator before calling the auth service.
 
+9. Module not found: Error: Can't resolve 'rxjs/Subject' in '/home/ana/chatapp/chat-app/node_modules/ng2-emoji-picker/esm5'
+
+The emoji picker module was built using an older version of rxjs (5.5.2), so this is why I was getting many errors like this one. The solution was simply to install the 'rxjs-compat' package for backwards compatibility.
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
