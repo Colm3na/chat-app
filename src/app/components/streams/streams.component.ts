@@ -31,14 +31,9 @@ export class StreamsComponent implements OnInit {
   }
 
   logout() {
-    const token = this.tokenService.getToken();
     this.tokenService.deleteToken();
-    if (token) {
-      return true;
-    } else {
-      this.router.navigate(['/']);
-      return false;
-    }
+    // go to login page
+    this.router.navigate(['/']);
   }
 
 }
