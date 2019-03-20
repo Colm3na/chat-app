@@ -25,6 +25,13 @@ export class StreamsComponent implements OnInit {
     
     this.socket.emit('online', { room: 'global', user: this.user.username, userId: this.user._id });
     this.socket.on('usersOnline', data => {
+      // avoid user to see themselves on the list of online users
+      data.forEach( (arr, index) => {
+        console.log(arr[0])
+        if ( arr[0] === this.user.username ) {
+          data.splice(index, 1);
+        }
+      });
       this.onlineUsers = data;
       console.log(this.onlineUsers)
     });
