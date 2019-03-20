@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from '@angular/router';
+import io from 'socket.io-client';
 
 @Component({
   selector: 'app-streams',
@@ -8,12 +9,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./streams.component.css']
 })
 export class StreamsComponent implements OnInit {
-
-  constructor( private tokenService: TokenService, private router: Router ) { }
+  socket: any;
   token: any;
+  user: any;
+  onlineUsers = [];
+
+  constructor( private tokenService: TokenService, 
+    private router: Router) {
+      this.socket = io('http://localhost:3000');
+    }
 
   ngOnInit() {
     this.token = this.tokenService.getPayload();
+    this.user = this.tokenService.getPayload();
+    
+    this.socket.emit('online', { room: 'global', user: this.user.username });
+    this.socket.on('usersOnline', data => {
+      this.onlineUsers = data;
+      console.log(this.onlineUsers)
+    });
   }
 
   logout() {
