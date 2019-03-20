@@ -23,7 +23,7 @@ export class StreamsComponent implements OnInit {
     this.token = this.tokenService.getPayload();
     this.user = this.tokenService.getPayload();
     
-    this.socket.emit('online', { room: 'global', user: this.user.username });
+    this.socket.emit('online', { room: 'global', user: this.user.username, userId: this.user._id });
     this.socket.on('usersOnline', data => {
       this.onlineUsers = data;
       console.log(this.onlineUsers)
