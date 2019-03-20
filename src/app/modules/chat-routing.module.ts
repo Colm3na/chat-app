@@ -8,6 +8,11 @@ const routes: Routes = [
     path: 'chat',
     component: ChatComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'chat/:senderId/:receiverId',
+    component: ChatComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
