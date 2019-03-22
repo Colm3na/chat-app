@@ -20,7 +20,9 @@ export class MessageComponent implements OnInit {
   messagesList: any = [];
   user: any;
   sender: string;
+  receiver: string;
   senderData: any;
+  receiverData: any;
   typing = false;
   messageDB: any;
   timer = 0;
@@ -42,10 +44,17 @@ export class MessageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.userService.getUser(params.receiverId).subscribe(data => {
+        this.receiverData = data;
+        console.log(this.receiverData)
+        this.receiver = this.receiverData.user[0].username;
+      });
+    })
+
     this.user = this.tokenService.getPayload();
     let username = this.user.username;
     this.userService.getUserByUsername(username).subscribe( data => {
-      console.log(data);
       this.senderData = data;
       this.sender = data['user'][0].username;
     })

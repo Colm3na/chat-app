@@ -1,33 +1,37 @@
-<div class="col s12 rowDiv" ngx-auto-scroll lock-y-offset="10" observe-attributes>
-  <div class="row">
-    <div class="col s12">
-      <div *ngFor="let message of messagesList">
-        <div *ngIf="user.username === sender" class="right chat-bubble">
-          <div>{{message}}</div>
-        </div>
+<div class="row">
+  <div class="valign-wrapper">
+    <div class="col s1 imgCol">
+    </div>
+    <span class="col s12" id="receiverName">{{receiver}}</span>
+  </div>
+
+  <div class="col s12">
+    <div *ngFor="let message of messagesList">
+      <div *ngIf="user.username === sender" class="right chat-bubble">
+        <div>{{message}}</div>
       </div>
     </div>
-    <div class="col s12">
-      <div style="margin-top: 250px">
-        <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(true); timer=5;" (keyup)="isTyping(false)">
-      </div>
-      <div class="col s10">
-        <span *ngIf="typing" id="typing">{{sender}} is typing...</span>
-      </div>
-      <div class="col s3 emojiDiv">
-        <button class="emojiBtn" type="button" (click)="Toggled(); false;">😄</button>
+  </div>
+  <div class="col s12">
+    <div style="margin-top: 250px">
+      <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(true); timer=5;" (keyup)="isTyping(false)">
+    </div>
+    <div class="col s10">
+      <span *ngIf="typing" id="typing">{{sender}} is typing...</span>
+    </div>
+    <div class="col s3 emojiDiv">
+      <button class="emojiBtn" type="button" (click)="Toggled(); false;">😄</button>
 
-        <div class="emoji-content-editable" (emojiPickerCaretEmitter)="handleCurrentCaret($event)" (input)="content = $event.target.textContent"
-          [textContent]="content" contenteditable="true">
-        </div>
+      <div class="emoji-content-editable" (emojiPickerCaretEmitter)="handleCurrentCaret($event)" (input)="content = $event.target.textContent"
+        [textContent]="content" contenteditable="true">
+      </div>
 
-        <i class="emoji-toggle-button imgBtn" [(emojiPickerIf)]="toggled"
-        [emojiPickerPreserveSelection]="false" [emojiPickerDirection]="direction" [emojiPickerAutofocus]="true"
-        (emojiPickerSelect)="handleSelection($event)"></i>
-      </div>
-      <div class="col s1">
-        <button class="suffix btn" (click)="send(); $event.preventDefault()">Send</button>
-      </div>
+      <i class="emoji-toggle-button imgBtn" [(emojiPickerIf)]="toggled"
+      [emojiPickerPreserveSelection]="false" [emojiPickerDirection]="direction" [emojiPickerAutofocus]="true"
+      (emojiPickerSelect)="handleSelection($event)"></i>
+    </div>
+    <div class="col s1">
+      <button class="suffix btn" (click)="send(); $event.preventDefault()">Send</button>
     </div>
   </div>
 </div>
