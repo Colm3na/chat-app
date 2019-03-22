@@ -29,7 +29,7 @@ export class StreamsComponent implements OnInit {
       data.forEach( (arr, index) => {
         console.log(arr[0])
         if ( arr[0] === this.user.username ) {
-          data.splice(index, 1);
+          data.splice(index, 2);
         }
       });
       this.onlineUsers = data;
