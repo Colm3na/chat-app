@@ -16,13 +16,25 @@ export class StreamsComponent implements OnInit {
 
   constructor( private tokenService: TokenService, 
     private router: Router) {
-      this.socket = io('http://localhost:3000');
     }
 
   ngOnInit() {
-    this.token = this.tokenService.getPayload();
     this.user = this.tokenService.getPayload();
-    
+    this.token = this.tokenService.getToken();
+
+    this.socket = io('http://localhost:3000', {
+      query: {
+        token: this.token,
+      },
+    });
+
+    // If you refresh your token, update it upon reconnection attempt
+    this.socket.on('reconnect_attempt', () => {
+      this.socket.io.opts.query = {
+        token: this.token,
+      };
+    });
+
     this.socket.emit('online', { room: 'global', user: this.user.username, userId: this.user._id });
     this.socket.on('usersOnline', data => {
       // avoid user to see themselves on the list of online users
