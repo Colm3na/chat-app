@@ -13,7 +13,7 @@
           <i class="material-icons">account_box</i>
         </a>
         <div [routerLinkActive]="['active']" style="margin-left: 20px;" *ngFor="let onlineUser of onlineUsers">
-          <a [routerLink]="['/chat/user[1]/onlineUser[1]']">{{onlineUser[0]}}</a>
+          <a [routerLink]="['/chat', user._id, onlineUser[1]]">{{onlineUser[0]}}</a>
         </div>
       </div>
     </div>
