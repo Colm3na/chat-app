@@ -1,5 +1,4 @@
-import { Component, Renderer2, ViewChild, ElementRef, OnInit } from '@angular/core';
-import io from 'socket.io-client';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-chat',
@@ -7,18 +6,9 @@ import io from 'socket.io-client';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  @ViewChild('input') input:ElementRef; 
-  socket: any;
 
-  constructor( private renderer: Renderer2 ) {
-    this.socket = io('http://localhost:3000');
-  }e
+  constructor() { }
 
-  ngOnInit() {
-    this.socket.on('event', (data) => {
-      console.log(this.input)
-      this.renderer.setAttribute( this.input.nativeElement, 'value', data.message );
-    });
-  }
+  ngOnInit() { }
 
 }
