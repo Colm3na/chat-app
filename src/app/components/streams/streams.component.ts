@@ -14,7 +14,7 @@ export class StreamsComponent implements OnInit {
   user: any;
   onlineUsers = [];
 
-  constructor( private tokenService: TokenService, 
+  constructor( private tokenService: TokenService,
     private router: Router) {
     }
 
@@ -24,35 +24,34 @@ export class StreamsComponent implements OnInit {
 
     this.socket = io('http://localhost:3000', {
       query: {
-        token: this.token,
-      },
+        token: this.token
+      }
     });
 
     // If you refresh your token, update it upon reconnection attempt
     this.socket.on('reconnect_attempt', () => {
       this.socket.io.opts.query = {
-        token: this.token,
+        token: this.token
       };
     });
 
-    this.socket.emit('online', { room: 'global', user: this.user.username, userId: this.user._id });
+    this.socket.emit('online', { user: this.user.username, userId: this.user._id });
     this.socket.on('usersOnline', data => {
+      console.log('all online users', data);
       // avoid user to see themselves on the list of online users
-      data.forEach( (arr, index) => {
-        console.log('username', arr[0])
-        console.log('all online users', data)
-        if ( arr[0] === this.user.username ) {
-          data.splice(index, 1);
-        }
-      });
-      this.onlineUsers = data;
+      const dataFiltered = data.filter( data => data.name !== this.user.username );
+
+      console.log('after filter', dataFiltered);
+      this.onlineUsers = dataFiltered;
     });
   }
 
   logout() {
     this.tokenService.deleteToken();
+    this.socket.emit('disconnect');
     // go to login page
     this.router.navigate(['/']);
+    location.reload();
   }
 
 }
