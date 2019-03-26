@@ -84,6 +84,10 @@ As I was on Ubuntu, emojis weren't being displayed colored. I had to follow thes
 
 Sadly, this solution only works in Firefox, and I couldn't find any solution yet for Chrome. Apparently, in Ubuntu 18.04+ it is as easy as installing the package 'fonts-noto-color-emoji' and restart Chrome. Some day I'll have to upgrade 😢
 
+12.  Error trying to diff '[object Object]'. Only arrays and iterables are allowed
+
+I was getting this error in message.component.html because I was passing an Object {} to ngFor, while this directive only allows arrays [] to iterate.
+
 # ChatApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
