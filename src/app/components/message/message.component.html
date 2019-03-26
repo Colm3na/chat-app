@@ -7,8 +7,11 @@
 
   <div class="col s12">
     <div *ngFor="let message of messagesList">
-      <div *ngIf="user.username === sender" class="right chat-bubble">
-        <div>{{message}}</div>
+      <div *ngIf="message.sender === sender" class="right chat-bubble">
+        <div>{{message.body}}</div>
+      </div>
+      <div *ngIf="message.sender === receiver" class="left chat-bubble">
+        <div>{{message.body}}</div>
       </div>
     </div>
   </div>

@@ -18,6 +18,8 @@ export class MessageComponent implements OnInit {
   socket: any;
   message: string;
   messagesList: any = [];
+  senderMsg: any = [];
+  receiverMsg: any = [];
   user: any;
   sender: string;
   receiver: string;
@@ -54,6 +56,7 @@ export class MessageComponent implements OnInit {
 
     this.user = this.tokenService.getPayload();
     let username = this.user.username;
+    console.log('username is', username)
     this.userService.getUserByUsername(username).subscribe( data => {
       this.senderData = data;
       this.sender = data['user'][0].username;
@@ -103,7 +106,7 @@ export class MessageComponent implements OnInit {
       if (!regex.test(this.message)) {
         this.message = this.input.nativeElement.value;
       }
-      this.messagesList.push(this.message);
+        // this.messagesList.push(this.message);
       this.socket.emit('new message', this.message);
       // set back input value to empty string
       this.input.nativeElement.value = '';
@@ -114,12 +117,21 @@ export class MessageComponent implements OnInit {
       this.messageDB = {
         body: this.message,
         sender: this.sender,
-        senderId: this.senderData['user'][0]._id
+        senderId: this.senderData['user'][0]._id,
+        receiverId: this.receiverData['user'][0]._id
       }
-      this.messageService.saveMessage(this.messageDB).subscribe( data => {
-        console.log(data);
-      });
-      this.message = '';
+  
+      this.messageService.sendMessage(this.senderData.id, this.receiverData.id, this.messageDB).subscribe( data => {
+        this.message = '';
+      })
+
+      this.messageService.getConversationMessages( this.messageDB.senderId, this.messageDB.receiverId ).subscribe( data => {
+        this.senderMsg = data[0][0];
+        this.receiverMsg = data[1][0];
+        let allMessages = this.senderMsg.concat(this.receiverMsg);
+        this.messagesList = allMessages;
+        console.log('messagesList after calling getAllMessages service', this.messagesList);
+      })
     } 
   }
 
