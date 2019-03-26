@@ -46,20 +46,41 @@ export class MessageComponent implements OnInit {
   }
 
   ngOnInit() {
+    // getting receiver info
     this.route.params.subscribe(params => {
       this.userService.getUser(params.receiverId).subscribe(data => {
         this.receiverData = data;
-        console.log(this.receiverData)
         this.receiver = this.receiverData.user[0].username;
       });
     })
 
     this.user = this.tokenService.getPayload();
     let username = this.user.username;
-    console.log('username is', username)
+    // getting sender info
     this.userService.getUserByUsername(username).subscribe( data => {
       this.senderData = data;
       this.sender = data['user'][0].username;
+
+      // getting all chat messages
+      this.messageService.getConversationMessages( this.senderData['user'][0]._id, this.receiverData['user'][0]._id ).subscribe( data => {
+        this.senderMsg = data[0][0];
+        this.receiverMsg = data[1][0];
+        let allMessages = this.senderMsg.concat(this.receiverMsg);
+        // sort array of all messages according to createdAt property.
+        let allMessagesSorted = allMessages.sort( (a, b) => {
+          console.log(a.createdAt)
+          if ( a.createdAt < b.createdAt ) {
+            return -1;
+          } else if ( a.createdAt === b.createdAt ) {
+            return 0;
+          } else {
+            return 1;
+          }
+        })
+        this.messagesList = allMessagesSorted;
+        
+        console.log('messagesList after calling getAllMessages service', this.messagesList);
+      })
     })
   }
 
@@ -123,14 +144,6 @@ export class MessageComponent implements OnInit {
   
       this.messageService.sendMessage(this.senderData.id, this.receiverData.id, this.messageDB).subscribe( data => {
         this.message = '';
-      })
-
-      this.messageService.getConversationMessages( this.messageDB.senderId, this.messageDB.receiverId ).subscribe( data => {
-        this.senderMsg = data[0][0];
-        this.receiverMsg = data[1][0];
-        let allMessages = this.senderMsg.concat(this.receiverMsg);
-        this.messagesList = allMessages;
-        console.log('messagesList after calling getAllMessages service', this.messagesList);
       })
     } 
   }
