@@ -92,9 +92,9 @@ export class MessageComponent implements OnInit {
     this.socket.on('receive message', data => {
       console.log('receive message activated');
       let newMessage = {
-        body: data,
+        body: data.body,
         createdAt: Date.now(),
-        sender: this.sender
+        sender: data.sender
       }
       this.messagesList.push(newMessage);
       console.log('messagesList after receive message', this.messagesList);
@@ -145,7 +145,7 @@ export class MessageComponent implements OnInit {
         this.message = this.input.nativeElement.value;
       }
       // emitting new message event
-      this.socket.emit('new message', this.message);
+      this.socket.emit('new message', {sender: this.sender, body: this.message});
       // set back input value to empty string
       this.input.nativeElement.value = '';
       // typing to false
