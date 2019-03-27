@@ -6,7 +6,6 @@
 
 .chat-bubble {
   display: inline-block;
-  border: 1px blue solid;
   border-radius: 12px;
   box-shadow: 5px 6px #8888;
   margin-bottom: 7px;
@@ -15,12 +14,22 @@
 }
 
 .rowDiv {
-    background: #ffffff !important;
-    height: 61vh !important;
-    max-height: 62vh !important;
-    overflow-y: scroll !important;
-    top: 0px;
-    margin-top: -20px !important;
+  background: #ffffff !important;
+  height: 61vh !important;
+  max-height: 62vh !important;
+  overflow-y: scroll !important;
+  top: 0px;
+  margin-top: -20px !important;
+}
+
+.sender {
+  background-color: rgb(116, 212, 164);;
+  border: 1px rgb(39, 78, 13) solid;
+}
+
+.receiver {
+  background-color: rgb(103, 210, 224);;
+  border: 1px rgb(14, 74, 152) solid;
 }
 
 #typing {

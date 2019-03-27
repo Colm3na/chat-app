@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from '@angular/router';
 import io from 'socket.io-client';
@@ -14,8 +14,10 @@ export class StreamsComponent implements OnInit {
   user: any;
   onlineUsers = [];
 
-  constructor( private tokenService: TokenService,
+  constructor( private renderer: Renderer2,
+    private tokenService: TokenService,
     private router: Router) {
+      this.renderer.setStyle(document.body, 'background-image', 'url("./assets/telegram-background2.jpg")');
     }
 
   ngOnInit() {
