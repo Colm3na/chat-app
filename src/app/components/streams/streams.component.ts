@@ -21,18 +21,11 @@ export class StreamsComponent implements OnInit {
   ngOnInit() {
     this.user = this.tokenService.getPayload();
     this.token = this.tokenService.getToken();
-
+    console.log(this.token)
     this.socket = io('http://localhost:3000', {
       query: {
         token: this.token
       }
-    });
-
-    // If you refresh your token, update it upon reconnection attempt
-    this.socket.on('reconnect_attempt', () => {
-      this.socket.io.opts.query = {
-        token: this.token
-      };
     });
 
     this.socket.emit('online', { user: this.user.username, userId: this.user._id });
