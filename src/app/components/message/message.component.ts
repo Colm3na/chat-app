@@ -16,6 +16,7 @@ export class MessageComponent implements OnInit {
   @ViewChild('inputMsg') input: ElementRef;
   @ViewChild('chatBubble') chatBubble: ElementRef;
   socket: any;
+  token: any;
   message: string;
   messagesList: any = [];
   senderMsg: any = [];
@@ -37,13 +38,10 @@ export class MessageComponent implements OnInit {
 
   private _lastCaretEvent: CaretEvent;
 
-  constructor( private renderer: Renderer2, 
-    private tokenService: TokenService, 
+  constructor( private tokenService: TokenService, 
     private route: ActivatedRoute,
     private userService: UsersService,
-    private messageService: MessageService ) {
-    this.socket = io('http://localhost:3000');
-  }
+    private messageService: MessageService ) { }
 
   ngOnInit() {
     // getting receiver info
@@ -55,6 +53,15 @@ export class MessageComponent implements OnInit {
     })
 
     this.user = this.tokenService.getPayload();
+    this.token = this.tokenService.getToken();
+
+    // setting socket
+    this.socket = io('http://localhost:3000', {
+      query: {
+        token: this.token
+      }
+    })
+
     let username = this.user.username;
     // getting sender info
     this.userService.getUserByUsername(username).subscribe( data => {
@@ -68,7 +75,6 @@ export class MessageComponent implements OnInit {
         let allMessages = this.senderMsg.concat(this.receiverMsg);
         // sort array of all messages according to createdAt property.
         let allMessagesSorted = allMessages.sort( (a, b) => {
-          console.log(a.createdAt)
           if ( a.createdAt < b.createdAt ) {
             return -1;
           } else if ( a.createdAt === b.createdAt ) {
@@ -81,6 +87,16 @@ export class MessageComponent implements OnInit {
         
         console.log('messagesList after calling getAllMessages service', this.messagesList);
       })
+    })
+    this.socket.on('receive message', data => {
+      console.log('receive message activated');
+      let newMessage = {
+        body: data,
+        createdAt: Date.now(),
+        sender: this.sender
+      }
+      this.messagesList.push(newMessage);
+      console.log('messagesList after receive message', this.messagesList);
     })
   }
 
@@ -127,7 +143,7 @@ export class MessageComponent implements OnInit {
       if (!regex.test(this.message)) {
         this.message = this.input.nativeElement.value;
       }
-        // this.messagesList.push(this.message);
+      // emitting new message event
       this.socket.emit('new message', this.message);
       // set back input value to empty string
       this.input.nativeElement.value = '';
@@ -142,7 +158,8 @@ export class MessageComponent implements OnInit {
         receiverId: this.receiverData['user'][0]._id
       }
   
-      this.messageService.sendMessage(this.senderData.id, this.receiverData.id, this.messageDB).subscribe( data => {
+      this.messageService.sendMessage(this.senderData.id, this.receiverData.id, this.messageDB).subscribe( () => {
+        // assign empty value to this.message 
         this.message = '';
       })
     } 
