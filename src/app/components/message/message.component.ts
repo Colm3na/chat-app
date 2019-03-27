@@ -120,6 +120,7 @@ export class MessageComponent implements OnInit {
     this.message = this.content;
 
     this.toggled = !this.toggled;
+    this.send();
   }
 
   handleCurrentCaret(event: CaretEvent) {

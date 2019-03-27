@@ -23,10 +23,10 @@
       <span *ngIf="typing" id="typing">{{typer}} is typing...</span>
     </div>
     <div class="col s3 emojiDiv">
-      <button class="emojiBtn" type="button" (click)="Toggled(); false;">😄</button>
+      <button class="emojiBtn" type="button" (click)="Toggled();">😄</button>
 
       <div class="emoji-content-editable" (emojiPickerCaretEmitter)="handleCurrentCaret($event)" (input)="content = $event.target.textContent"
-        [textContent]="content" contenteditable="true">
+        [textContent]="content" contenteditable="true" hidden>
       </div>
 
       <i class="emoji-toggle-button imgBtn" [(emojiPickerIf)]="toggled"
