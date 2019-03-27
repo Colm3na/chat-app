@@ -17,10 +17,10 @@
   </div>
   <div class="col s12">
     <div style="margin-top: 250px">
-      <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(true); timer=5;" (keyup)="isTyping(false)">
+      <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(sender, true)" (keyup)="isTyping(sender, false)">
     </div>
     <div class="col s10">
-      <span *ngIf="typing" id="typing">{{sender}} is typing...</span>
+      <span *ngIf="typing" id="typing">{{typer}} is typing...</span>
     </div>
     <div class="col s3 emojiDiv">
       <button class="emojiBtn" type="button" (click)="Toggled(); false;">😄</button>

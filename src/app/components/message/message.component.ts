@@ -29,6 +29,7 @@ export class MessageComponent implements OnInit {
   typing = false;
   messageDB: any;
   timer = 0;
+  typer: string;
 
   eventMock;
   eventPosMock;
@@ -98,6 +99,14 @@ export class MessageComponent implements OnInit {
       this.messagesList.push(newMessage);
       console.log('messagesList after receive message', this.messagesList);
     })
+
+    this.socket.on('receive typing', data => {
+      this.typing = data.val;
+      if (data.sender) {
+        this.typer = data.sender;
+        console.log('typer is', this.typer);
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -122,16 +131,8 @@ export class MessageComponent implements OnInit {
     this.toggled = !this.toggled;
   }
 
-  isTyping(val) {
-    if ( val === true ) {
-      this.typing = true;
-    } else {
-      if ( this.timer <= 0 ) {
-        this.typing = false;
-      } else {
-        setTimeout(() => {this.timer = 0; this.isTyping(false)}, 1500);
-      }
-    }
+  isTyping(sender, val) {
+    this.socket.emit('typing', {sender, val});
   }
 
   send() {
