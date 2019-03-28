@@ -15,10 +15,10 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const token = this.tokenService.getToken();
 
-    if (token) {
-      this.router.navigate(['chat']);
-    } else {
-      this.router.navigate(['/']);
-    }
+    // if (token) {
+    //   this.router.navigate(['chat']);
+    // } else {
+    //   this.router.navigate(['/']);
+    // }
   }
 }
