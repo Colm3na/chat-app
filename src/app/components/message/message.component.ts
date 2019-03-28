@@ -97,7 +97,9 @@ export class MessageComponent implements OnInit {
         console.log('messagesList after calling getAllMessages service', this.messagesList);
       })
     })
+
     this.socket.on('receive message', data => {
+      console.log('!!!!!!!!! receive message activated');
       let newMessage = {
         body: data.body,
         createdAt: Date.now(),
@@ -124,10 +126,14 @@ export class MessageComponent implements OnInit {
     })
 
     this.socket.on('receive typing', data => {
-      console.log(data.sender, 'is typing');
-      this.typing = data.val;
-      if (data.sender) {
-        this.typer = data.sender;
+      console.log('Ooo receive typing activated');
+      // quick fix. user typing only shows up if in the conversation window
+      if ( data.sender === this.receiver ) {
+        console.log(data.sender, 'is typing');
+        this.typing = data.val;
+        if (data.sender) {
+          this.typer = data.sender;
+        }
       }
     })
   }
