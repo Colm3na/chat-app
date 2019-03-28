@@ -25,6 +25,7 @@ export class MessageComponent implements OnInit {
   sender: string;
   receiver: string;
   senderData: any;
+  senderId: string;
   receiverData: any;
   receiverId: string;
   typing = false;
@@ -74,6 +75,7 @@ export class MessageComponent implements OnInit {
     this.userService.getUserByUsername(username).subscribe( data => {
       this.senderData = data;
       this.sender = data['user'][0].username;
+      this.senderId = data['user'][0]._id;
 
       // getting all chat messages
       this.messageService.getConversationMessages( this.senderData['user'][0]._id, this.receiverData['user'][0]._id ).subscribe( data => {
@@ -96,14 +98,29 @@ export class MessageComponent implements OnInit {
       })
     })
     this.socket.on('receive message', data => {
-      console.log('receive message activated');
       let newMessage = {
         body: data.body,
         createdAt: Date.now(),
-        sender: data.sender
+        sender: data.sender,
+        senderId: data.senderId,
+        receiver: data.receiver,
+        receiverId: data.receiverId,
       }
-      this.messagesList.push(newMessage);
-      console.log('messagesList after receive message', this.messagesList);
+
+      // check to make conversation private using sender's and receiver's ids
+      // check if it is receiver
+      if ( this.sender !== newMessage.sender ) {
+        if ( newMessage.senderId === this.receiverId && newMessage.receiverId === this.senderId ) {
+          this.messagesList.push(newMessage);
+          console.log('messagesList after receive message', this.messagesList);
+        }
+      // check if it is sender 
+      } else {
+        if ( newMessage.senderId === this.senderId && newMessage.receiverId === this.receiverId ) {
+          this.messagesList.push(newMessage);
+          console.log('messagesList after receive message', this.messagesList);
+        }
+      }
     })
 
     this.socket.on('receive typing', data => {
@@ -152,7 +169,11 @@ export class MessageComponent implements OnInit {
         this.message = this.input.nativeElement.value;
       }
       // emitting new message event
-      this.socket.emit('new message', {sender: this.sender, body: this.message});
+      this.socket.emit('new message', {sender: this.sender, 
+                                      senderId: this.senderId, 
+                                      receiver: this.receiver, 
+                                      receiverId: this.receiverId, 
+                                      body: this.message});
       // set back input value to empty string
       this.input.nativeElement.value = '';
       // typing to false
