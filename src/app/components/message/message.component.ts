@@ -26,6 +26,7 @@ export class MessageComponent implements OnInit {
   receiver: string;
   senderData: any;
   receiverData: any;
+  receiverId: string;
   typing = false;
   messageDB: any;
   timer = 0;
@@ -50,6 +51,7 @@ export class MessageComponent implements OnInit {
       this.userService.getUser(params.receiverId).subscribe(data => {
         this.receiverData = data;
         this.receiver = this.receiverData.user[0].username;
+        this.receiverId = this.receiverData.user[0]._id;
       });
     })
 
@@ -61,6 +63,10 @@ export class MessageComponent implements OnInit {
       query: {
         token: this.token
       }
+    })
+
+    this.socket.on('connect', () => {
+      this.socket.id = this.user._id;
     })
 
     let username = this.user.username;
@@ -101,10 +107,10 @@ export class MessageComponent implements OnInit {
     })
 
     this.socket.on('receive typing', data => {
+      console.log(data.sender, 'is typing');
       this.typing = data.val;
       if (data.sender) {
         this.typer = data.sender;
-        console.log('typer is', this.typer);
       }
     })
   }
@@ -132,8 +138,8 @@ export class MessageComponent implements OnInit {
     this.toggled = !this.toggled;
   }
 
-  isTyping(sender, val) {
-    this.socket.emit('typing', {sender, val});
+  isTyping(sender, receiverId, val) {
+    this.socket.emit('typing', {sender, receiverId, val});
   }
 
   send() {

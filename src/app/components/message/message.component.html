@@ -17,7 +17,7 @@
   </div>
   <div class="col s12">
     <div style="margin-top: 250px">
-      <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(sender, true)" (keyup)="isTyping(sender, false)">
+      <input #inputMsg type="text" (change)="send(); $event.preventDefault()" (keypress)="isTyping(sender, receiverId, true)" (keyup)="isTyping(sender, receiverId, false)">
     </div>
     <div class="col s10">
       <span *ngIf="typing" id="typing">{{typer}} is typing...</span>
