@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import io from 'socket.io-client';
 import { TokenService } from 'src/app/services/token.service';
 import { ActivatedRoute } from '@angular/router';
@@ -59,17 +59,6 @@ export class MessageComponent implements OnInit {
     this.user = this.tokenService.getPayload();
     this.token = this.tokenService.getToken();
 
-    // setting socket
-    this.socket = io('http://localhost:3000', {
-      query: {
-        token: this.token
-      }
-    })
-
-    this.socket.on('connect', () => {
-      this.socket.id = this.user._id;
-    })
-
     let username = this.user.username;
     // getting sender info
     this.userService.getUserByUsername(username).subscribe( data => {
@@ -96,6 +85,18 @@ export class MessageComponent implements OnInit {
         
         console.log('messagesList after calling getAllMessages service', this.messagesList);
       })
+    })
+
+    // setting socket
+    this.socket = io('http://localhost:3000', {
+      query: {
+        token: this.token
+      }
+    })
+
+    this.socket.on('connect', async () => {
+      this.socket.id = this.user._id;
+      await this.socket.emit('enter chat', this.receiver)
     })
 
     this.socket.on('receive message', data => {
@@ -161,8 +162,8 @@ export class MessageComponent implements OnInit {
     this.toggled = !this.toggled;
   }
 
-  isTyping(sender, receiverId, val) {
-    this.socket.emit('typing', {sender, receiverId, val});
+  isTyping(sender, receiver, val) {
+    this.socket.emit('typing', {sender, receiver, val});
   }
 
   send() {
