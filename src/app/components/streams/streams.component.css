@@ -3,3 +3,13 @@
   flex-direction: column;
   float: left;
 }
+
+.unread {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  line-height: 15px;
+  width: 15px;
+  display: inline-block;
+  text-align: center;
+}
