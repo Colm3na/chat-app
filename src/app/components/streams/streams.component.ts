@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from '@angular/router';
 import io from 'socket.io-client';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-streams',
@@ -13,9 +14,11 @@ export class StreamsComponent implements OnInit {
   token: any;
   user: any;
   onlineUsers = [];
+  unreadMsgs: number; // number of unread messages 
 
   constructor( private renderer: Renderer2,
     private tokenService: TokenService,
+    public messageService: MessageService,
     private router: Router) {
       this.renderer.setStyle(document.body, 'background-image', 'url("./assets/telegram-background2.jpg")');
     }
@@ -23,7 +26,15 @@ export class StreamsComponent implements OnInit {
   ngOnInit() {
     this.user = this.tokenService.getPayload();
     this.token = this.tokenService.getToken();
-    console.log(this.token)
+    console.log(this.token);
+
+    // get number of unread messages of user
+    this.messageService.getUnreadMessages(this.user._id)
+    .subscribe( data => {
+      this.unreadMsgs = data['messages'];
+      console.log('unread messages', this.unreadMsgs);
+    });
+    
     this.socket = io('http://localhost:3000', {
       query: {
         token: this.token

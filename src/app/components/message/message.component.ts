@@ -103,6 +103,7 @@ export class MessageComponent implements OnInit {
       console.log('!!!!!!!!! receive message activated');
       let newMessage = {
         body: data.body,
+        isRead: true,
         createdAt: Date.now(),
         sender: data.sender,
         senderId: data.senderId,

@@ -25,4 +25,9 @@ export class MessageService {
   saveMessage(body) {
     return this.http.post(`${BASEURL}/chat-messages`, body)
   }
+
+  // get number of unread messages of user
+  getUnreadMessages(senderId) {
+    return this.http.get(`${BASEURL}/chat-messages/${senderId}/unread`)
+  }
 }
