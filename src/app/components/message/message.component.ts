@@ -18,6 +18,8 @@ export class MessageComponent implements OnInit {
   socket: any;
   token: any;
   message: string;
+  messageDB: any;
+  messageID: string;
   messagesList: any = [];
   senderMsg: any = [];
   receiverMsg: any = [];
@@ -28,8 +30,8 @@ export class MessageComponent implements OnInit {
   senderId: string;
   receiverData: any;
   receiverId: string;
+
   typing = false;
-  messageDB: any;
   timer = 0;
   typer: string;
 
@@ -102,14 +104,19 @@ export class MessageComponent implements OnInit {
     this.socket.on('receive message', data => {
       console.log('!!!!!!!!! receive message activated');
       let newMessage = {
+        id: data.id,
         body: data.body,
-        isRead: true,
         createdAt: Date.now(),
         sender: data.sender,
         senderId: data.senderId,
         receiver: data.receiver,
         receiverId: data.receiverId,
       }
+
+      // set message as read
+      this.messageService.setMessageAsRead(newMessage.id).subscribe( () => {
+        console.log('message succesfully set to read');
+      });
 
       // check to make conversation private using sender's and receiver's ids
       // check if it is receiver
@@ -176,12 +183,6 @@ export class MessageComponent implements OnInit {
       if (!regex.test(this.message)) {
         this.message = this.input.nativeElement.value;
       }
-      // emitting new message event
-      this.socket.emit('new message', {sender: this.sender, 
-                                      senderId: this.senderId, 
-                                      receiver: this.receiver, 
-                                      receiverId: this.receiverId, 
-                                      body: this.message});
       // set back input value to empty string
       this.input.nativeElement.value = '';
       // typing to false
@@ -195,7 +196,18 @@ export class MessageComponent implements OnInit {
         receiverId: this.receiverData['user'][0]._id
       }
   
-      this.messageService.sendMessage(this.senderData.id, this.receiverData.id, this.messageDB).subscribe( () => {
+      this.messageService.sendMessage(this.senderData.id, this.receiverData.id, this.messageDB).subscribe( data => {
+        this.messageID = data['id'];
+
+        // emitting new message event
+        this.socket.emit('new message', {
+          id: this.messageID,
+          sender: this.sender, 
+          senderId: this.senderId, 
+          receiver: this.receiver, 
+          receiverId: this.receiverId, 
+          body: this.message,
+        });
         // assign empty value to this.message 
         this.message = '';
       })
