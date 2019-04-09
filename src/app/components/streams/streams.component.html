@@ -15,7 +15,7 @@
         <div [routerLinkActive]="['active']" style="margin-left: 20px;" *ngFor="let onlineUser of onlineUsers">
           <a [routerLink]="['/chat', user._id, onlineUser.id]">{{onlineUser.name}}</a>
           &nbsp;
-          <span class="unread">{{unreadMsgs}}</span>
+          <span *ngIf="unreadMsgs > 0" class="unread">{{unreadMsgs}}</span>
         </div>
       </div>
     </div>
