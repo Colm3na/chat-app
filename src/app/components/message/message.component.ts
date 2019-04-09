@@ -113,11 +113,6 @@ export class MessageComponent implements OnInit {
         receiverId: data.receiverId,
       }
 
-      // set message as read
-      this.messageService.setMessageAsRead(newMessage.id).subscribe( () => {
-        console.log('message succesfully set to read');
-      });
-
       // check to make conversation private using sender's and receiver's ids
       // check if it is receiver
       if ( this.sender !== newMessage.sender ) {
@@ -134,11 +129,17 @@ export class MessageComponent implements OnInit {
       }
     })
 
+    this.socket.on('read message', data => {
+      // set message as read
+      this.messageService.setMessageAsRead(data).subscribe( () => {
+        console.log('message succesfully set to read');
+      });
+    })
+
     this.socket.on('receive typing', data => {
-      console.log('Ooo receive typing activated');
       // quick fix. user typing only shows up if in the conversation window
       if ( data.sender === this.receiver ) {
-        console.log(data.sender, 'is typing');
+        // console.log(data.sender, 'is typing');
         this.typing = data.val;
         if (data.sender) {
           this.typer = data.sender;
