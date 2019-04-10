@@ -14,7 +14,7 @@ export class StreamsComponent implements OnInit {
   token: any;
   user: any;
   onlineUsers = [];
-  unreadMsgs: number; // number of unread messages 
+  unreadMsgs = [];
 
   constructor( private renderer: Renderer2,
     private tokenService: TokenService,
@@ -50,6 +50,12 @@ export class StreamsComponent implements OnInit {
       console.log('after filter', dataFiltered);
       this.onlineUsers = dataFiltered;
     });
+  }
+
+  get_number_unread_messages_per_sender(array, value) {
+    var count = 0;
+    array.forEach( msg => (msg.sender === value && count++));
+    return count;
   }
 
   logout() {
