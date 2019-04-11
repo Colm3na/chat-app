@@ -101,6 +101,14 @@ export class MessageComponent implements OnInit {
       await this.socket.emit('enter chat', this.receiver)
     })
 
+    this.socket.on('entered chat', () => {
+      console.log('reading all messages senderId is', this.senderId, 'and receiverId', this.receiverId)
+
+      this.messageService.set_all_messages_as_read(this.senderId, this.receiverId).subscribe( data => {
+        console.log('All messages successfully set as read', data);
+      });
+    })
+
     this.socket.on('receive message', data => {
       console.log('!!!!!!!!! receive message activated');
       let newMessage = {
@@ -120,7 +128,7 @@ export class MessageComponent implements OnInit {
           this.messagesList.push(newMessage);
           console.log('messagesList after receive message', this.messagesList);
         }
-      // check if it is sender 
+      // if it is sender 
       } else {
         if ( newMessage.senderId === this.senderId && newMessage.receiverId === this.receiverId ) {
           this.messagesList.push(newMessage);
@@ -130,10 +138,14 @@ export class MessageComponent implements OnInit {
     })
 
     this.socket.on('read message', data => {
-      // set message as read
-      this.messageService.setMessageAsRead(data).subscribe( () => {
-        console.log('message succesfully set to read');
-      });
+      // check if user is talking to sender
+      if ( data.sender === this.receiver) {
+        // set message as read
+        console.log('reading message. Data is', data);
+        this.messageService.setMessageAsRead(data.id).subscribe( () => {
+          console.log('message succesfully set to read');
+        });
+      }
     })
 
     this.socket.on('receive typing', data => {
