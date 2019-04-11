@@ -35,4 +35,8 @@ export class MessageService {
   setMessageAsRead(messageId) {
     return this.http.get(`${BASEURL}/chat-messages/${messageId}/read`);
   }
+
+  set_all_messages_as_read(receiverId, senderId) {
+    return this.http.get(`${BASEURL}/chat-messages/${senderId}/${receiverId}/read`);
+  }
 }
