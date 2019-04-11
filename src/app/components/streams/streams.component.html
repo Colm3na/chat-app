@@ -15,11 +15,7 @@
         <div [routerLinkActive]="['active']" style="margin-left: 20px;" *ngFor="let onlineUser of onlineUsers; let i = index;">
           <a [routerLink]="['/chat', user._id, onlineUser.id]">{{onlineUser.name}}</a>
           &nbsp;
-          <span *ngFor="let unreadMsg of unreadMsgs">
-            <span *ngIf="onlineUser.name === unreadMsg.sender" class="unread">
-              {{get_number_unread_messages_per_sender(unreadMsgs, onlineUser.name)}}  
-            </span>
-          </span>
+          <span *ngIf="unreadMsgs[i]" class="unread">{{display_number_unread_messages( onlineUser.name)}}</span>
         </div>
       </div>
     </div>

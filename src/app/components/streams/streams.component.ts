@@ -31,7 +31,15 @@ export class StreamsComponent implements OnInit {
     // get number of unread messages of user
     this.messageService.getUnreadMessages(this.user._id)
     .subscribe( data => {
-      this.unreadMsgs = data['messages'];
+      let rawUnreadMsgs = data['messages'];
+      // transform array to make more understandable
+      rawUnreadMsgs = rawUnreadMsgs.map( msg => msg.sender );
+      let unique = rawUnreadMsgs.filter((v, i, a) => a.indexOf(v) === i); 
+
+      for ( let i = 0; i < unique.length; i++ ) {
+        let occurence = this.get_occurence_in_array(rawUnreadMsgs, unique[i]);
+        this.unreadMsgs.push({sender: unique[i], numberMsgs: occurence});
+      }
       console.log('unread messages', this.unreadMsgs);
     });
     
@@ -52,10 +60,20 @@ export class StreamsComponent implements OnInit {
     });
   }
 
-  get_number_unread_messages_per_sender(array, value) {
+  get_occurence_in_array(array, value) {
     var count = 0;
-    array.forEach( msg => (msg.sender === value && count++));
+    array.forEach( sender => (sender === value && count++));
     return count;
+  }
+
+  display_number_unread_messages(user) {
+    for ( let i = 0; i < this.unreadMsgs.length; i++ ) {
+      if ( this.unreadMsgs[i].sender === user ) {
+        // console.log('display number unread activated');
+        return this.unreadMsgs[i].numberMsgs;
+      }
+    }
+    return;
   }
 
   logout() {
