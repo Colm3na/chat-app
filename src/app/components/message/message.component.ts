@@ -54,6 +54,7 @@ export class MessageComponent implements OnInit {
       this.userService.getUser(params.receiverId).subscribe(data => {
         this.receiverData = data;
         this.receiver = this.receiverData[0].username;
+        console.log('this.receiver is', this.receiver);
         this.receiverId = this.receiverData[0]._id;
       });
     })
@@ -97,9 +98,16 @@ export class MessageComponent implements OnInit {
       }
     })
 
-    this.socket.on('connect', async () => {
+    this.socket.on('connect', () => {
       this.socket.id = this.user._id;
-      await this.socket.emit('enter chat', this.receiver)
+      // this timeout makes sure that first we get the room's name before the user can access it
+      let timer = 0;
+      setTimeout(() => {
+        timer = 3;
+        console.log('Going to launch enter chat. this.receiver is', this.receiver);
+        this.socket.emit('enter chat', this.receiver)
+      }, 500);
+
     })
 
     this.socket.on('entered chat', () => {
