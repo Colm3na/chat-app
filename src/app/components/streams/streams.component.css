@@ -13,3 +13,7 @@
   display: inline-block;
   text-align: center;
 }
+
+.nowrap {
+  white-space: nowrap;
+}
