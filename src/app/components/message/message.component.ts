@@ -53,8 +53,8 @@ export class MessageComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.userService.getUser(params.receiverId).subscribe(data => {
         this.receiverData = data;
-        this.receiver = this.receiverData.user[0].username;
-        this.receiverId = this.receiverData.user[0]._id;
+        this.receiver = this.receiverData[0].username;
+        this.receiverId = this.receiverData[0]._id;
       });
     })
 
@@ -65,11 +65,12 @@ export class MessageComponent implements OnInit {
     // getting sender info
     this.userService.getUserByUsername(username).subscribe( data => {
       this.senderData = data;
-      this.sender = data['user'][0].username;
-      this.senderId = data['user'][0]._id;
+      this.sender = data[0].username;
+      this.senderId = data[0]._id;
 
       // getting all chat messages
-      this.messageService.getConversationMessages( this.senderData['user'][0]._id, this.receiverData['user'][0]._id ).subscribe( data => {
+      this.messageService.getConversationMessages( this.senderData[0]._id, this.receiverData[0]._id ).subscribe( data => {
+        console.log( 'messages', data );
         this.senderMsg = data[0][0];
         this.receiverMsg = data[1][0];
         let allMessages = this.senderMsg.concat(this.receiverMsg);
@@ -102,8 +103,6 @@ export class MessageComponent implements OnInit {
     })
 
     this.socket.on('entered chat', () => {
-      console.log('reading all messages senderId is', this.senderId, 'and receiverId', this.receiverId)
-
       this.messageService.set_all_messages_as_read(this.senderId, this.receiverId).subscribe( data => {
         console.log('All messages successfully set as read', data);
       });
@@ -141,7 +140,6 @@ export class MessageComponent implements OnInit {
       // check if user is talking to sender
       if ( data.sender === this.receiver) {
         // set message as read
-        console.log('reading message. Data is', data);
         this.messageService.setMessageAsRead(data.id).subscribe( () => {
           console.log('message succesfully set to read');
         });
@@ -205,8 +203,8 @@ export class MessageComponent implements OnInit {
       this.messageDB = {
         body: this.message,
         sender: this.sender,
-        senderId: this.senderData['user'][0]._id,
-        receiverId: this.receiverData['user'][0]._id
+        senderId: this.senderData[0]._id,
+        receiverId: this.receiverData[0]._id
       }
   
       this.messageService.sendMessage(this.senderData.id, this.receiverData.id, this.messageDB).subscribe( data => {
