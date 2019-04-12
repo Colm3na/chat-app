@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from '@angular/router';
 import io from 'socket.io-client';
@@ -7,7 +7,8 @@ import { MessageService } from 'src/app/services/message.service';
 @Component({
   selector: 'app-streams',
   templateUrl: './streams.component.html',
-  styleUrls: ['./streams.component.css']
+  styleUrls: ['./streams.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StreamsComponent implements OnInit {
   socket: any;
@@ -15,12 +16,21 @@ export class StreamsComponent implements OnInit {
   user: any;
   onlineUsers = [];
   unreadMsgs = [];
+  timer = 0;
 
   constructor( private renderer: Renderer2,
     private tokenService: TokenService,
     public messageService: MessageService,
-    private router: Router) {
+    private router: Router,
+    private cdr: ChangeDetectorRef ) {
       this.renderer.setStyle(document.body, 'background-image', 'url("./assets/telegram-background2.jpg")');
+
+      // with this Angular will check for changes only once.
+      // it will prevent the display_number_unread_messages function from being run continuously
+      setTimeout(() => {
+        this.timer = 5;
+        this.cdr.detectChanges();
+      }, 1000);
     }
 
   ngOnInit() {
@@ -69,7 +79,7 @@ export class StreamsComponent implements OnInit {
   display_number_unread_messages(user) {
     for ( let i = 0; i < this.unreadMsgs.length; i++ ) {
       if ( this.unreadMsgs[i].sender === user ) {
-        // console.log('display number unread activated');
+        console.log('display number unread activated');
         return this.unreadMsgs[i].numberMsgs;
       }
     }
